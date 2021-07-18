@@ -24,3 +24,6 @@ def register():
 @app.route("/register", methods = ['POST'])
 def createUser():
     return create_user(request)
+
+if __name__ == "__main__":
+    app.run()
