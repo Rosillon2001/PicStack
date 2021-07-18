@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from src.Config import *
 from src.user_controller import *
@@ -9,4 +9,9 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    return "Elpepe"
+    pene = ["gramde", "xikito", "gordp", "peluo"]
+    return render_template("index.html", pene = pene)
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
