@@ -9,8 +9,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
-    pene = ["gramde", "xikito", "gordp", "peluo"]
-    return render_template("index.html", pene = pene)
+    return render_template("index.html")
 
 @app.route("/login")
 def login():
