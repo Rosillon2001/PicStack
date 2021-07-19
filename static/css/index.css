@@ -10,6 +10,6 @@
 #greet{
     background-color: rgb(240, 102, 51);
     width: 50vw;
-    height: 100vh;
+    height: 100%;
     border-radius: 7px;
 }
