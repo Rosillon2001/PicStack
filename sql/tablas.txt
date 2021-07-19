@@ -1,0 +1,21 @@
+create table usuario(
+	id_usuario serial primary key, 
+	nombre_usuario varchar(60),
+	clave varchar(150)
+);
+
+create table repositorio(
+	id_repo serial primary key, 
+	nombre_repo varchar(60),
+	id_usuario serial, 
+	foreign key (id_usuario) references usuario (id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+create table imagen(
+	id_imagen serial primary key, 
+	nombre_imagen varchar(60),  
+	autor varchar(60),
+	tags TEXT[], 
+	id_repo serial,
+	foreign key (id_repo) references repositorio (id_repo) ON DELETE CASCADE ON UPDATE CASCADE
+);

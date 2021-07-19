@@ -23,7 +23,8 @@ def register():
 
 @app.route("/register", methods = ['POST'])
 def createUser():
-    return create_user(request)
+    res = create_user(request)
+    return render_template("main.html", respuesta = res)
 
 if __name__ == "__main__":
     app.run()
