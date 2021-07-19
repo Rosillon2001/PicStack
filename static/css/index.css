@@ -1,3 +1,12 @@
+*{
+    font-family: goth;
+}
+
+@font-face {
+    font-family: goth;
+    src: url(../fonts/BankGothicRegular.ttf);
+}
+
 #greet{
     background-color: rgb(240, 102, 51);
     width: 50vw;
