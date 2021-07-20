@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="../static/css/index.css"/>
     <title>PicStack</title>
 </head>
+
+
 <body>
+
 
 <div class="d-flex bd-highlight mb-3">
     <!--Banner-->
@@ -62,6 +65,13 @@
 </div>
 </div>
 
+<div class="d-flex flex-column bd-highlight mb-3 justify-content-center flex-grow-1">
+{% for value in message %}
+<div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
+    <strong>{{value}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
 <div class="d-flex p-2 bd-highlight align-items-center justify-content-center flex-column flex-grow-1">
     <h1>Regístrate en Pic-Stack</h1>
     <form action="/register" method="POST">
@@ -88,6 +98,7 @@
     </form>
 </div>
 
+</div>
 </div>
 
     <!-- <h1>que pasa master</h1>
