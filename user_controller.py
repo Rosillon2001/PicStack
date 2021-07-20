@@ -39,9 +39,14 @@ def get_user_pass(request):
     user = request.form['username']
     datos = db.session.query(User).filter(User.nombre_usuario == user)
     for row in datos:
-        print('En la db ->')
-        print(row.clave)
-    return row.clave
+        clave = row.clave
+    return clave
+
+def get_user_id(username):
+    datos = db.session.query(User).filter(User.nombre_usuario == username)
+    for row in datos:
+        user = row.id_usuario
+    return user
 
 def auth_pass(request, password):
     claveDB = get_user_pass(request).encode('utf-8')

@@ -20,6 +20,13 @@
     height: 10%;
 }
 
+#jumboProfile{
+    color:#ffffff;
+    padding: 2vh;
+    text-align: center;
+    border-radius: 10px;
+}
+
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     font-weight: bold;
     color: white;
@@ -37,3 +44,12 @@
 .nav-link:focus, .nav-link:hover {
     color: #ffffff;
 }
+
+.btn-outline-light {
+    color: #f8f9fa;
+    border-color: orangered;
+}
+ .btn-outline-dark{
+     color: white;
+     border-color: orangered;
+ }
