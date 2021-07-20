@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../static/images/LogoC.png"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/index.css"/>
     <title>PicStack</title>
@@ -62,21 +63,8 @@
 </div>
 </div>
 
-<div class="d-flex p-2 bd-highlight align-items-center justify-content-center flex-column flex-grow-1">
-        <h1>Inicia tu viaje en Pic-Stack</h1>
-        <div class="d-flex p-2 bd-highlight">
-            <h2>Inicia Sesión</h2>
-        </div>
-            <div class="d-flex p-2 bd-highlight">
-                <a class="btn btn-outline-dark" href="/login" role="button" style="color: orangered;">Inicia Sesión</a>
-            </div>
-        <div class="d-flex p-2 bd-highlight">
-            <h2>Regístrate</h2>
-        </div>
-        <div class="d-flex p-2 bd-highlight">
-            <a class="btn btn-outline-dark" href="/register" role="button" style="color: orangered;">Regístrate</a>
-        </div>
-</div>
+{% block contenido %}
+{% endblock %}
 
 </div>
 
