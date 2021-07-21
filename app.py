@@ -87,9 +87,14 @@ def loginUser():
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
-    
-    username = session['username']
-    idu = session['id']
+    username = ''
+    idu = 0
+    while username == '' or idu == 0:
+        try:
+            username = session['username']
+            idu = session['id']
+        except:
+            print("no se pudo obtener la data")
     print (username, idu)
     return {'username':username, 'id':idu}
 
