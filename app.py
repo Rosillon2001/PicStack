@@ -12,8 +12,8 @@ db = SQLAlchemy(app)
 
 from user_controller import *
 
-message = ''
-sendId = 0
+message 
+sendId 
 
 @app.before_request
 def session_management():
@@ -80,7 +80,6 @@ def loginUser():
     if(len(errores) >= 1):
         return render_template('login.html', message = errores)
     else:
-        session.permanent = True
         session['username'] = username
         global message
         message = session['username']
@@ -93,10 +92,11 @@ def loginUser():
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
-    username = session['username']
-    id = session['id']
-    print (username, id)
-    return {'username':username, 'id':id}
+    
+    global message
+    global sendId
+    print (message, sendId)
+    return {'username':message, 'id':sendId}
 
 @app.route('/home', methods = ['GET'])
 def feed():
