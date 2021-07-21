@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from Config import *
@@ -68,12 +68,15 @@ def loginUser():
     if(len(errores) >= 1):
         return render_template('login.html', message = errores)
     else:
-        session['username'] = username
-        message = session['username']
-        Userid = get_user_id(session['username'])
-        session['id'] = Userid
-        sendId = session['id']
-        return render_template('home.html', message = message, id = sendId)
+        try:
+            session['username'] = username
+            #message = session['username']
+            Userid = get_user_id(session['username'])
+            session['id'] = Userid
+            #sendId = session['id']
+            return redirect("/home")
+        except:
+            print('exception')
 
 @app.route('/home', methods = ['GET'])
 def feed():
