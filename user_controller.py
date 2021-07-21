@@ -3,8 +3,8 @@ from user import User
 import bcrypt
 
 def create_user(request):
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form['usernameRegister']
+    password = request.form['passwordRegister1']
     salt = bcrypt.gensalt()
     hashPass = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
     print('pass: '+str(password)+' hash: '+str(hashPass))
@@ -23,9 +23,8 @@ def get_user_byid(id):
             'nombre_usuario': user.nombre_usuario, 
             'clave':user.clave}
 
-def get_user_byname(request):
+def get_user_byname(user):
     comparable = '';
-    user = request.form['username']
     existence = db.session.query(User).filter(User.nombre_usuario == user)
     for row in existence:
         print('En la db ->')
@@ -35,8 +34,7 @@ def get_user_byname(request):
         return True
     return False
 
-def get_user_pass(request):
-    user = request.form['username']
+def get_user_pass(user):
     datos = db.session.query(User).filter(User.nombre_usuario == user)
     for row in datos:
         clave = row.clave
@@ -51,8 +49,8 @@ def get_user_id(username):
 
 
 # -------------------------------------------------comparacion y autenticacion de contraseñas-------------------------------------------
-def auth_pass(request, password):
-    claveDB = get_user_pass(request).encode('utf-8')
+def auth_pass(user, password):
+    claveDB = get_user_pass(user).encode('utf-8')
     print(claveDB)
     verif = bcrypt.checkpw(password.encode('utf-8'), claveDB)
     if verif == True:
@@ -61,8 +59,8 @@ def auth_pass(request, password):
         return False
 
 def comp_claves(request):
-    clave = request.form['password']
-    conf = request.form['passwordConfirm']
+    clave = request.form['passwordRegister1']
+    conf = request.form['passwordRegister2']
     if (clave == conf):
         return True
     else:

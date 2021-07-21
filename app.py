@@ -27,7 +27,8 @@ def register():
 
 @app.route("/register", methods = ['POST'])
 def createUser():
-    existencia = get_user_byname(request)
+    user = request.form['usernameRegister']
+    existencia = get_user_byname(user)
     matchPass = comp_claves(request)
     #print(existencia)
     errores = []
@@ -49,8 +50,8 @@ def createUser():
 @app.route("/login", methods = ['POST'])
 def loginUser():
     errores = []
-    password = request.form['password']
-    username = request.form['username']
+    password = request.form['passwordLogin']
+    username = request.form['usernameLogin']
     print(password)
 
     if not password:
@@ -60,12 +61,12 @@ def loginUser():
         errores.append('Ingrese el nombre de usuario')
 
     else:
-        existencia = get_user_byname(request)
+        existencia = get_user_byname(username)
 
         if existencia == False:
             errores.append('El usuario no está registrado')
         else: 
-            verif = auth_pass(request, password)
+            verif = auth_pass(username, password)
             if verif == False:
                 errores.append('La contraseña es incorrecta')
 
