@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from Config import *
 import os
- 
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, './templates')
@@ -12,6 +11,11 @@ app.config.from_object(ProductionConfig)
 db = SQLAlchemy(app)
 
 from user_controller import *
+
+@app.before_request
+def session_management():
+  session.permanent = True
+
 
 @app.route("/", methods = ['GET'])
 def index():
@@ -73,6 +77,7 @@ def loginUser():
     if(len(errores) >= 1):
         return render_template('login.html', message = errores)
     else:
+        session.clear()
         session['username'] = username
         #message = session['username']
         Userid = get_user_id(session['username'])
@@ -82,23 +87,23 @@ def loginUser():
 
 @app.route('/home', methods = ['GET'])
 def feed():
-    # message = session['username'] , message = message, id = sendId
-    # sendId = session['id']
-    return render_template('home.html')
+    message = session['username'] 
+    sendId = session['id']
+    return render_template('home.html', message = message, id = sendId)
 
 @app.route('/images', methods = ['GET'])
 def repo():
-    # message = session['username']
-    # sendId = session['id']
-    return render_template('images.html')
+    message = session['username']
+    sendId = session['id']
+    return render_template('images.html', message = message, id = sendId)
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id):
-    # message = session['username']
-    # sendId = session['id']  message = message, datos = datos, id = sendId
+    message = session['username']
+    sendId = session['id']  
     datos = get_user_byid(id)
     print(datos)
-    return render_template('profile.html')
+    return render_template('profile.html', message = message, datos = datos, id = sendId)
 
 # @app.route('/updateUser/<id>', methods = ['PUT'])
 # def updateUser(id):
