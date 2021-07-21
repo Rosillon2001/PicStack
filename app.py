@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template, session, redirect
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.utils import redirect
 from Config import *
 import os
 
