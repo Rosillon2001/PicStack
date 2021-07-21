@@ -1,5 +1,5 @@
-// window.onload = datos;
-datos()
+ window.onload = datos;
+
 function datos(){
     fetch('/user/data',{
         method: 'GET'
