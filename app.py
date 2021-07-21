@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from Config import *
@@ -88,6 +88,9 @@ def loginUser():
         session['id'] = Userid
         global sendId 
         sendId = session['id']
+        # envia los datos de la sesion al front
+        sendData()
+        # 
         return redirect("/home")
 
 @app.route('/user/data', methods = ['GET'])
