@@ -1,3 +1,4 @@
+from abc import abstractproperty
 from app import db
 from user import User
 import bcrypt
@@ -46,7 +47,34 @@ def get_user_id(username):
         user = row.id_usuario
     return user
 
+def updateData(request, username, id):
+    user = User.query.get(id)
+    newUsername = request.form['username']
+    passActual = request.form['passwordProfile1']
+    passNueva = request.form['passwordProfile2']
+    newpass = False
 
+    errores = []
+
+    if passNueva != '':
+        newpass = True
+    if passActual == '' or username == '' :
+        errores.append('No deje campos vacíos')
+
+    else:
+        if auth_pass(username, passActual) == False:
+            errores.append('La contraseña actual no coincide con la registrada')
+
+        if passActual == passNueva and auth_pass(username, passActual) == True:
+            errores.append('La constraseña es la misma, ingrese una nueva')
+
+    if len(errores) < 1:
+        user.nombre_usuario = newUsername
+        if newpass == True:
+            user.clave = hashing(passNueva)
+        db.session.commit()
+    else: 
+        return errores
 
 # -------------------------------------------------comparacion y autenticacion de contraseñas-------------------------------------------
 def auth_pass(user, password):
@@ -66,3 +94,8 @@ def comp_claves(request):
     else:
         return False
 
+def hashing(password):
+    salt = bcrypt.gensalt()
+    hashPass = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+    
+    return hashPass

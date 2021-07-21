@@ -8,7 +8,7 @@
         <!-- mensajes de error -->
     <div class="jumbotron mt-4 align-items-center bg-dark" id="jumboProfile">
         <h1>Modifique sus credenciales</h1>
-        <form action="/update" method="PUT">
+        <form action="/updateUser" method="POST">
             <h5>Nombre de usuario</h5>
                 <div class="form-group">
                     <input type="text" name='username' class="form-control" placeholder="Nombre de usuario" value="{{datos['nombre_usuario']}}" autofocus>
@@ -17,7 +17,7 @@
             <h5>Contraseña actual</h5>
                 <div class="form-group">
                     <div class="input-group mb-3">
-                        <input type="passwordProfile1" name='password' class="form-control" placeholder="Contraseña actual" id="passwordProfile1">
+                        <input type="password" name='passwordProfile1' class="form-control" placeholder="Contraseña actual" id="passwordProfile1">
                         <button class="btn btn-outline-secondary" type="button" id="buttonSH1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-eye-fill" viewBox="0 0 16 16" id="showpassP1">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>

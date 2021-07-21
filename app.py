@@ -111,9 +111,26 @@ def showdata(id):
     print(datos)
     return render_template('profile.html', datos = datos)
 
-# @app.route('/updateUser/<id>', methods = ['PUT'])
-# def updateUser(id):
-#     return    
+@app.route('/updateUser', methods = ['POST'])
+def updateUser():
+    username = ''
+    id = 0
+    while username == '':
+        try:
+            username = session['username']
+            id = session['id']
+        except:
+            username = ''
+    update = updateData(request, username, id)
+    print (update)
+
+    if len(update) >= 1:
+        datos = get_user_byid(id)
+        return render_template('profile.html', erroes = update, datos = datos)
+    else:    
+        session.pop('username')
+        session.pop('id')
+        return  redirect('/login')
 
 
 if __name__ == "__main__":
