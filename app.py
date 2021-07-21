@@ -1,21 +1,15 @@
 from flask import Flask, request, render_template, session, redirect
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import redirect
 from Config import *
 import os
+ 
 
-
-def create_app():
-    project_root = os.path.dirname(__file__)
-    template_path = os.path.join(project_root, './templates')
-    app = Flask(__name__, template_folder=template_path)
-    app.config.from_object(ProductionConfig)
-    return app
-
-app = create_app()
+project_root = os.path.dirname(__file__)
+template_path = os.path.join(project_root, './templates')
+app = Flask(__name__, template_folder=template_path)
+app.config.from_object(ProductionConfig)
 db = SQLAlchemy(app)
-with app.app_context():
-    db.init_app(app)
-    db.create_all()
 
 from user_controller import *
 
