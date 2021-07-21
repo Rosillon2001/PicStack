@@ -92,6 +92,7 @@ def loginUser():
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
+    global session
     print (session['username'], session['id'])
     return {'username':session['username'], 'id':session['id']}
 
