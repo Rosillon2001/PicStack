@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from Config import *
@@ -11,13 +11,6 @@ app.config.from_object(ProductionConfig)
 db = SQLAlchemy(app)
 
 from user_controller import *
-
-message = ''
-sendId = 0
-
-@app.before_request
-def session_management():
-  session.permanent = True
 
 
 @app.route("/", methods = ['GET'])
@@ -48,6 +41,8 @@ def createUser():
         return render_template("register.html", message = errores)
     else:
         res = create_user(request)
+        global IdU
+        IdU = get_user_id(user)
         return render_template("login.html", respuesta = res)
     # if(existencia == False):
     # else:
@@ -78,25 +73,25 @@ def loginUser():
                 errores.append('La contraseña es incorrecta')
 
     if(len(errores) >= 1):
-        return render_template('login.html', message = errores)
+        return render_template('login.html', message = errores), 300
     else:
         session['username'] = username
-        global message
-        message = session['username']
+        # global message
+        # message = session['username']
         Userid = get_user_id(session['username'])
         session['id'] = Userid
-        global sendId 
-        sendId = session['id']
+        # global sendId 
+        # sendId = session['id']
 
         return redirect("/home")
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
     
-    global message
-    global sendId
-    print (message, sendId)
-    return {'username':message, 'id':sendId}
+    username = session['username']
+    idu = session['id']
+    print (username, idu)
+    return {'username':username, 'id':idu}
 
 @app.route('/home', methods = ['GET'])
 def feed():
