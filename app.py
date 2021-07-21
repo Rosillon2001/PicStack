@@ -2,8 +2,12 @@ from flask import Flask, request, render_template, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from Config import *
+import os
+ 
 
-app = Flask(__name__)
+project_root = os.path.dirname(__file__)
+template_path = os.path.join(project_root, './templates')
+app = Flask(__name__, template_folder=template_path)
 app.config.from_object(DevelopmentConfig)
 db = SQLAlchemy(app)
 
