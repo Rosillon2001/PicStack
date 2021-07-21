@@ -83,7 +83,7 @@ def loginUser():
         # global sendId 
         # sendId = session['id']
 
-        return render_template('home.html')
+        return redirect("/home")
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
