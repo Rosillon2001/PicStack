@@ -79,13 +79,13 @@ def loginUser():
 def feed():
     message = session['username']
     sendId = session['id']
-    return render_template('home.html')
+    return render_template('home.html', message = message, id = sendId)
 
 @app.route('/images', methods = ['GET'])
 def repo():
     message = session['username']
     sendId = session['id']
-    return render_template('images.html')
+    return render_template('images.html', message = message, id = sendId)
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id):
@@ -93,12 +93,11 @@ def showdata(id):
     sendId = session['id']
     datos = get_user_byid(id)
     print(datos)
-    return render_template('profile.html')
+    return render_template('profile.html', message = message, datos = datos, id = sendId)
 
 # @app.route('/updateUser/<id>', methods = ['PUT'])
 # def updateUser(id):
 #     return    
-
 
 
 if __name__ == "__main__":
