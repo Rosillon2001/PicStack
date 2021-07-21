@@ -1,8 +1,5 @@
 from app import db
 from sqlalchemy import ForeignKey
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
 
 class Repositorio(db.Model):
     __tablename__ = 'repositorio', 
