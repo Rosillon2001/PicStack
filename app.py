@@ -89,11 +89,12 @@ def loginUser():
 def sendData():
     username = ''
     idu = 0
-    try:
-        username = session['username']
-        idu = session['id']
-    except:
-            print("no se pudo obtener la data")
+    while username == '' or idu == 0:
+        try:
+            username = session['username']
+            idu = session['id']
+        except:
+            print()
     print (username, idu)
     return {'username':username, 'id':idu}
 
