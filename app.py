@@ -82,23 +82,23 @@ def loginUser():
 
 @app.route('/home', methods = ['GET'])
 def feed():
-    message = session['username']
-    sendId = session['id']
-    return render_template('home.html', message = message, id = sendId)
+    # message = session['username'] , message = message, id = sendId
+    # sendId = session['id']
+    return render_template('home.html')
 
 @app.route('/images', methods = ['GET'])
 def repo():
-    message = session['username']
-    sendId = session['id']
-    return render_template('images.html', message = message, id = sendId)
+    # message = session['username']
+    # sendId = session['id']
+    return render_template('images.html')
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id):
-    message = session['username']
-    sendId = session['id']
+    # message = session['username']
+    # sendId = session['id']  message = message, datos = datos, id = sendId
     datos = get_user_byid(id)
     print(datos)
-    return render_template('profile.html', message = message, datos = datos, id = sendId)
+    return render_template('profile.html')
 
 # @app.route('/updateUser/<id>', methods = ['PUT'])
 # def updateUser(id):
