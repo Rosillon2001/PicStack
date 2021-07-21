@@ -93,12 +93,18 @@ def loginUser():
 @app.route('/home', methods = ['GET'])
 def feed():
     global message
-    global sendId
+    message = session['username']
+    global sendId 
+    sendId = session['id']
     print(message, sendId)
     return render_template('home.html', message = message, id = sendId)
 
 @app.route('/images', methods = ['GET'])
 def repo():
+    global message
+    message = session['username']
+    global sendId 
+    sendId = session['id']
     print(message, sendId)
     return render_template('images.html', message = message, id = sendId)
 
