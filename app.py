@@ -80,7 +80,6 @@ def loginUser():
     if(len(errores) >= 1):
         return render_template('login.html', message = errores)
     else:
-        session.clear()
         session['username'] = username
         global message
         message = session['username']
@@ -88,16 +87,14 @@ def loginUser():
         session['id'] = Userid
         global sendId 
         sendId = session['id']
-        # envia los datos de la sesion al front
-        sendData()
-        # 
+
         return redirect("/home")
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
     username = session['username']
     id = session['id']
-    print (session['username'], session['id'])
+    print (username, id)
     return {'username':username, 'id':id}
 
 @app.route('/home', methods = ['GET'])
