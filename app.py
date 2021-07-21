@@ -100,7 +100,7 @@ def feed():
 @app.route('/images', methods = ['GET'])
 def repo():
     print(message, sendId)
-    return render_template('images.html')
+    return render_template('images.html', message = message, id = sendId)
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id):
@@ -108,7 +108,7 @@ def showdata(id):
     # sendId = session['id']  
     datos = get_user_byid(id)
     print(datos)
-    return render_template('profile.html', datos = datos)
+    return render_template('profile.html', datos = datos, message = message, id = sendId)
 
 # @app.route('/updateUser/<id>', methods = ['PUT'])
 # def updateUser(id):
