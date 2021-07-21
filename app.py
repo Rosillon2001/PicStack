@@ -1,4 +1,3 @@
-from os import error
 from flask import Flask, request, render_template, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
@@ -96,5 +95,14 @@ def showdata(id):
     print(datos)
     return render_template('profile.html', message = message, datos = datos, id = sendId)
 
+@app.route('/updateUser/<id>', methods = ['PUT'])
+def updateUser(id):
+    return    
+
+db.init_app(app)
+
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run()
+    

@@ -48,6 +48,9 @@ def get_user_id(username):
         user = row.id_usuario
     return user
 
+
+
+# -------------------------------------------------comparacion y autenticacion de contraseñas-------------------------------------------
 def auth_pass(request, password):
     claveDB = get_user_pass(request).encode('utf-8')
     print(claveDB)

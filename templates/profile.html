@@ -15,12 +15,15 @@
         <!-- mensajes de error -->
     <div class="jumbotron mt-4 align-items-center bg-dark" id="jumboProfile">
         <h1>Modifique sus credenciales</h1>
-        <form action="/update" method="PUT">
+
+        <form action="/updateUser/{{datos['id_usuario']}}" method="PUT">
+
             <h5>Nombre de usuario</h5>
                 <div class="form-group">
                     <input type="text" name='username' class="form-control" placeholder="Nombre de usuario" value="{{datos['nombre_usuario']}}" autofocus>
                 </div>
                 <br>
+
             <h5>Contraseña actual</h5>
                 <div class="form-group">
                     <div class="input-group mb-3">
@@ -38,6 +41,7 @@
                     </div>
                 </div>
                 <br>
+
             <h5>Nueva contraseña</h5>
                 <div class="form-group">
                     <div class="input-group mb-3">
@@ -59,8 +63,8 @@
                 <div class="d-flex form-group justify-content-center">
                     <button class="btn btn-outline-light" type="submit" style="color: orangered;">Actualizar Datos</button>
                 </div>
-    
         </form>
+        
     </div>
     
     </div>
