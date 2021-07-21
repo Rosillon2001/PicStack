@@ -68,15 +68,12 @@ def loginUser():
     if(len(errores) >= 1):
         return render_template('login.html', message = errores)
     else:
-        try:
-            session['username'] = username
-            #message = session['username']
-            Userid = get_user_id(session['username'])
-            session['id'] = Userid
-            #sendId = session['id']
-            return redirect("/home")
-        except:
-            print('exception')
+        session['username'] = username
+        #message = session['username']
+        Userid = get_user_id(session['username'])
+        session['id'] = Userid
+        #sendId = session['id']
+        return redirect("/home")
 
 @app.route('/home', methods = ['GET'])
 def feed():
@@ -98,9 +95,9 @@ def showdata(id):
     print(datos)
     return render_template('profile.html', message = message, datos = datos, id = sendId)
 
-@app.route('/updateUser/<id>', methods = ['PUT'])
-def updateUser(id):
-    return    
+# @app.route('/updateUser/<id>', methods = ['PUT'])
+# def updateUser(id):
+#     return    
 
 
 
