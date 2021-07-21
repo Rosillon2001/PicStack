@@ -124,7 +124,7 @@ def updateUser():
     update = updateData(request, username, id)
     print (update)
 
-    if len(update) != None:
+    if update != None:
         datos = get_user_byid(id)
         return render_template('profile.html', erroes = update, datos = datos)
     else:    
