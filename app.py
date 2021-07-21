@@ -92,9 +92,10 @@ def loginUser():
 
 @app.route('/user/data', methods = ['GET'])
 def sendData():
-    global session
+    username = session['username']
+    id = session['id']
     print (session['username'], session['id'])
-    return {'username':session['username'], 'id':session['id']}
+    return {'username':username, 'id':id}
 
 @app.route('/home', methods = ['GET'])
 def feed():
