@@ -12,8 +12,8 @@ db = SQLAlchemy(app)
 
 from user_controller import *
 
-message 
-sendId 
+message = ''
+sendId = 0
 
 @app.before_request
 def session_management():
