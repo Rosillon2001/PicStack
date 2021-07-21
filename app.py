@@ -90,14 +90,16 @@ def feed():
     if 'username' in session:
         message = session['username'] 
         sendId = session['id']
+        print(message, sendId)
     else: 
         print('no se obtuvieron los datos')
     return render_template('home.html', message = message, id = sendId)
 
 @app.route('/images', methods = ['GET'])
 def repo():
-    # message = session['username']
-    # sendId = session['id']
+    message = session['username']
+    sendId = session['id']
+    print(message, sendId)
     return render_template('images.html')
 
 @app.route('/user/<id>', methods =['GET'])
