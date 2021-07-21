@@ -80,6 +80,7 @@ def loginUser():
     if(len(errores) >= 1):
         return render_template('login.html', message = errores)
     else:
+        session.permanent = True
         session['username'] = username
         global message
         message = session['username']
