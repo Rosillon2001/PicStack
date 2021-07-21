@@ -87,23 +87,26 @@ def loginUser():
 
 @app.route('/home', methods = ['GET'])
 def feed():
-    message = session['username'] 
-    sendId = session['id']
+    if 'username' in session:
+        message = session['username'] 
+        sendId = session['id']
+    else: 
+        print('no se obtuvieron los datos')
     return render_template('home.html', message = message, id = sendId)
 
 @app.route('/images', methods = ['GET'])
 def repo():
-    message = session['username']
-    sendId = session['id']
-    return render_template('images.html', message = message, id = sendId)
+    # message = session['username']
+    # sendId = session['id']
+    return render_template('images.html')
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id):
-    message = session['username']
-    sendId = session['id']  
+    # message = session['username']
+    # sendId = session['id']  
     datos = get_user_byid(id)
     print(datos)
-    return render_template('profile.html', message = message, datos = datos, id = sendId)
+    return render_template('profile.html', datos = datos)
 
 # @app.route('/updateUser/<id>', methods = ['PUT'])
 # def updateUser(id):
