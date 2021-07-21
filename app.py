@@ -4,7 +4,7 @@ from werkzeug.utils import redirect
 from Config import *
 
 app = Flask(__name__)
-app.config.from_object(ProductionConfig)
+app.config.from_object(DevelopmentConfig)
 db = SQLAlchemy(app)
 
 from user_controller import *
@@ -101,5 +101,5 @@ def updateUser(id):
 
 db.create_all()
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
     
