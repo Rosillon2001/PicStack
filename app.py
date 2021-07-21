@@ -8,7 +8,7 @@ import os
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, './templates')
 app = Flask(__name__, template_folder=template_path)
-app.config.from_object(DevelopmentConfig)
+app.config.from_object(ProductionConfig)
 db = SQLAlchemy(app)
 
 from user_controller import *
