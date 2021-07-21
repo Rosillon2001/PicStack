@@ -2,10 +2,17 @@
 
 {% block content %}
 <div class="d-flex justify-content-center"><h1>Perfil de {{datos['nombre_usuario']}}</h1></div>
-
+    
 
     <div class="d-flex p-2 bd-highlight align-items-center justify-content-center flex-column flex-grow-1 ">
         <!-- mensajes de error -->
+        {% for value in errores %}
+        <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
+            <strong>{{value}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+
     <div class="jumbotron mt-4 align-items-center bg-dark" id="jumboProfile">
         <h1>Modifique sus credenciales</h1>
         <form action="/updateUser" method="POST">

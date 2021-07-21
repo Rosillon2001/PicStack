@@ -126,7 +126,7 @@ def updateUser():
 
     if update != None:
         datos = get_user_byid(id)
-        return render_template('profile.html', erroes = update, datos = datos)
+        return render_template('profile.html', errores = update, datos = datos)
     else:    
         session.pop('username')
         session.pop('id')
