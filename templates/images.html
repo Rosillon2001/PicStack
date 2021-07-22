@@ -21,7 +21,7 @@
         {% for value in error %}
         <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
             <strong>{{value}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <a type="button" class="btn btn-outline-danger" href="/images" style="margin-left: 1vh;">Reintentar</a>
         </div>
         {% endfor %}
         {% for value in success %}
@@ -70,10 +70,35 @@
         {% for value in repositorios %}
         <div class="col">
           <div class="card border border-1 rounded-1" style="margin-bottom: 2vh;">
-          <div class="d-flex justify-content-center bg-dark borderborder-1 rounded-1"><h5 class="card-header " id="noombreCancion" style="color: whitesmoke;">{{value['nombre']}}</h5></div>
+          <div class="d-flex justify-content-center bg-dark borderborder-1 rounded-1"><h5 class="card-header " style="color: whitesmoke;">{{value['nombre']}}</h5></div>
+
+          <!-- form edicion -->
+          <div class="collapse" id="form{{value['id']}}">
+            <div class="card card-body bg-dark" style="text-align: center;">
+              <div class="mb-3">
+                <form action="/editRepo" method="POST">
+                    <h4 style="color: white">Nombre</h4>
+                    <input type="text" name="nombreRepo" placeholder="Repositorio n" style="
+                    border-radius: 8px; border-color: orangered; text-align: center;" value="{{value['nombre']}}">
+                    <h4 style="color: white">Id Usuario</h4>
+                    <input type="number" name="userRepo" style="border-radius: 8px; border-color: orangered;" readonly>
+                    <br><br>
+                    <button class="btn btn-outline-light" type="submit" style="color: orangered;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orangered" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                      </svg>
+                    </button>
+                </form>
+              </div>
+            </div>
+          </div>
+
           <div class="card-body ">
              <img src="../static/images/LogoC.png" class="card-img" alt="...">
              <a href="" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Sube Imagenes</a>
+             <a href="#form{{value['id']}}" style="color: rgb(174, 0, 255);" class="btn btn-outline-warning d-flex justify-content-center" id="editRepo"
+             data-bs-toggle="collapse" href="#newrepo" role="button" aria-expanded="false" aria-controls="collapseExample">Editar Nombre</a>
+             <a href="" style="color: black;" class="btn btn-outline-danger d-flex justify-content-center" id="deleteRepo">Eliminar</a>
           </div>
           </div>
        </div>

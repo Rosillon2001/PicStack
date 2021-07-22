@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from Config import *
 import os
@@ -172,6 +172,10 @@ def newRepo():
     if repo[0] == 'Ya creo un repositorio con este nombre':
         error.append('Ya creo un repositorio con este nombre')
         return render_template('/images.html', error = error)
+
+@app.route('/editRepo', methods = ['POST'])
+def editRepo():
+    return
 
 
 # --------------------------------------------------- Inicializacion del server -------------------------------------------------------
