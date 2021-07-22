@@ -16,6 +16,72 @@
         </a>
         </li>
       </ul>
-    <p>Tu repositorio</p>
+    
+      <div class="d-flex justify-content-center">
+        {% for value in error %}
+        <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
+            <strong>{{value}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% for value in success %}
+        <div class="alert alert-success alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
+            <strong>{{value}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- form de creacion de los repositorios -->
+    <div class="d-flex bd-highlight justify-content-center">
+          
+        <div class="p-2 d-flex "><h1>Repositorios</h1></div>
+        <div class="p-2 d-flex align-content-center" style="margin-right: 2vw;">
+          <a class="btn btn-outline-dark" data-bs-toggle="collapse" href="#newrepo" role="button" style="color: orangered;"
+          aria-expanded="false" aria-controls="collapseExample">
+            Crear Repo
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+              <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+            </svg>
+          </a>
+        </div>
+    </div>
+    <!-- form del repo -->
+    <div class="collapse" id="newrepo">
+      <div class="card card-body bg-dark" style="text-align: center;">
+        <div class="mb-3">
+          <form action="/createRepo" method="POST">
+              <h4 style="color: white">Ingrese el nombre del repositorio</h4>
+              <input type="text" name="nombreRepo" id="nombreRepo" placeholder="Repositorio n" style="width: 50vw; 
+              border-radius: 8px; border-color: orangered; font-size: 20px;" >
+              <h4 style="color: white">Id Usuario</h4>
+              <input type="number" name="userRepo" id="userRepo" style="width: 50vw; 
+              border-radius: 8px; border-color: orangered; font-size: 20px;" readonly>
+              <br><br>
+              <button class="btn btn-outline-light" type="submit" style="color: orangered;">Crear</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- mostrar los repositorios -->
+    <div class="jumbotron mt-4 " > 
+      <div class=" row  row-cols-md-4 " style="padding: 2vh;">
+        {% for value in repositorios %}
+        <div class="col">
+          <div class="card border border-1 rounded-1" style="margin-bottom: 2vh;">
+          <div class="d-flex justify-content-center bg-dark borderborder-1 rounded-1"><h5 class="card-header " id="noombreCancion" style="color: whitesmoke;">{{value['nombre']}}</h5></div>
+          <div class="card-body ">
+             <img src="../static/images/LogoC.png" class="card-img" alt="...">
+             <a href="" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Sube Imagenes</a>
+          </div>
+          </div>
+       </div>
+       {% endfor %}
+      </div>
+    </div>
+    
+
     <script src="../static/js/app.js"></script>
+    <script src="../static/js/repo.js"></script>
 {% endblock %}

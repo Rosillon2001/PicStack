@@ -84,6 +84,8 @@ def loginUser():
 
         return redirect("/home")
 
+# ------------------------------------------------------- Manejo de usuarios --------------------------------------------------
+
 @app.route('/user/data', methods = ['GET'])
 def sendData():
     username = ''
@@ -103,7 +105,15 @@ def feed():
 
 @app.route('/images', methods = ['GET'])
 def repo():
-    return render_template('images.html')
+    idu = 0
+    while idu == 0:
+        try:
+            idu = session['id']
+        except:
+            print()
+    repositorios = get_user_repos(idu)
+    # print(repositorios[0]['nombre'])
+    return render_template('images.html', repositorios = repositorios)
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id): 
@@ -148,6 +158,23 @@ def deleteUser(id):
     print(response)
     return redirect('/')
 
+# ---------------------------------------------------Manejo de repositorios--------------------------------------------------------------
+from repo_controller import *
+
+@app.route('/createRepo', methods = ['POST'])
+def newRepo():
+    repo = create_repo(request)
+    success= []
+    error = []
+    if repo[0] == 'Repositorio creado':
+        success.append('Repositorio creado')
+        return redirect('/images')
+    if repo[0] == 'Ya creo un repositorio con este nombre':
+        error.append('Ya creo un repositorio con este nombre')
+        return render_template('/images.html', error = error)
+
+
+# --------------------------------------------------- Inicializacion del server -------------------------------------------------------
 if __name__ == "__main__":
     app.run()
     

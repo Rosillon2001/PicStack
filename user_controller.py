@@ -1,4 +1,3 @@
-from abc import abstractproperty
 from app import db
 from user import User
 import bcrypt
@@ -6,11 +5,12 @@ import bcrypt
 def create_user(request):
     username = request.form['usernameRegister']
     password = request.form['passwordRegister1']
+    # hashing de la contrasenia
     salt = bcrypt.gensalt()
     hashPass = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
     print('pass: '+str(password)+' hash: '+str(hashPass))
 
-    
+    # se aniade al usuario
     user = User(username, hashPass)
     db.session.add(user)
     db.session.commit()
