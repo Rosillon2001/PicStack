@@ -62,6 +62,8 @@ def updateData(request, username, id):
         errores.append('No deje campos vacíos')
 
     else:
+        if get_user_byname(newUsername) == True:
+            errores.append('El nombre de usuario ya está en uso, seleccione otro') 
         if auth_pass(username, passActual) == False:
             errores.append('La contraseña actual no coincide con la registrada')
 
