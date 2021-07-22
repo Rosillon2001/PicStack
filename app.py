@@ -128,10 +128,25 @@ def updateUser():
         datos = get_user_byid(id)
         return render_template('profile.html', errores = update, datos = datos)
     else:    
-        session.pop('username')
-        session.pop('id')
+        while 'username' in session or 'id' in session:
+            try:
+                session.pop('username')
+                session.pop('id')
+            except:
+                print('Cerrando la sesion')
         return  redirect('/login')
 
+@app.route('/logout', methods =['GET'])
+def logout(): 
+    session.pop('username')
+    session.pop('id')
+    return  redirect('/login')
+
+@app.route('/deleteUser/<id>', methods = ['GET'])
+def deleteUser(id):
+    response = user_delete(id)
+    print(response)
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run()

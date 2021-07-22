@@ -76,6 +76,12 @@ def updateData(request, username, id):
     else: 
         return errores
 
+def user_delete(id):
+    user = User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    return {'message': 'user deleted'}
+
 # -------------------------------------------------comparacion y autenticacion de contraseñas-------------------------------------------
 def auth_pass(user, password):
     claveDB = get_user_pass(user).encode('utf-8')

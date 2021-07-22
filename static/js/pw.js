@@ -1,3 +1,29 @@
+datos();
+
+function datos(){
+    fetch('/user/data',{
+        method: 'GET'
+    }).then(response => response.json())
+    
+    .then(data => {
+        console.log('Datos de eliminacion',data);
+        // username = data.username;
+        id = data.id;
+        // console.table(data);
+        deleteId(id);
+
+    })
+    .catch(error => console.log('ERROR', error));
+}
+
+//pasarle el id al boton de eliminar cuenta
+function deleteId(id){
+    var del = document.getElementById('deleteId')
+
+    del.setAttribute('href', `/deleteUser/${id}`)
+}
+
+// funcion para la muestra y oculto de los input password
 function hideNshow(input, button, sh1, sh2){
     var show = document.getElementById(sh1)
     var hide = document.getElementById(sh2)
