@@ -1,0 +1,38 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<!-- titulo -->
+<div class="d-flex justify-content-center">
+    <h1>{{repoName[0]}}</h1>
+</div>
+
+<div class="d-flex jumbotron mt-4 justify-content-center" style="text-align: center;">
+    <form action="/image/upload/{{idRepo}}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="rutaImagen" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*">
+            </div>
+            <div class="form-group">
+                <input type="text" name="tituloImagen" class="form-control" name="imgName" placeholder="Titulo de Imagen">
+            </div>
+            <div class="form-group">
+                <input type="text" name="autorImagen" class="form-control" name="imgAutor" value="{{autor}}" placeholder="Autor" readonly>
+            </div>
+            <div class="form-group">
+                <input type="text" name="tagsImagen" class="form-control" name="imgTags" placeholder="Tags">
+            </div>
+            <div class="form-group">
+                <input type="number" name="repoImagen" class="form-control" name="imgRepo" value="{{idRepo}}" placeholder="Id Repositorio" readonly>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-light" style="color: orangered;">Publicar</button>
+            </div>
+    </form>
+</div>
+
+{% for value in imagenes %}
+    <img src="../static/uploads/{{value['ruta']}}">
+    <h1>{{value['ruta']}}</h1>
+{% endfor %}
+
+{% endblock %}

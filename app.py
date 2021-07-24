@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, session, redirect, url_for, s
 from flask_sqlalchemy import SQLAlchemy
 from Config import *
 import os
+import errno
 
 project_root = os.path.dirname(__file__)
 template_path = os.path.join(project_root, './templates')
@@ -9,6 +10,14 @@ app = Flask(__name__, template_folder=template_path)
 app.config.from_object(ProductionConfig)
 db = SQLAlchemy(app)
 
+# ruta de guardado de imagenes
+UPLOAD_FOLDER = os.path.abspath('./static/uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+try:
+    os.mkdir('./static/uploads')
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 from user_controller import *
 
 
@@ -173,10 +182,60 @@ def newRepo():
         error.append('Ya creo un repositorio con este nombre')
         return render_template('/images.html', error = error)
 
-@app.route('/editRepo', methods = ['POST'])
-def editRepo():
-    return
+@app.route('/editRepo/<id>', methods = ['POST'])
+def editRepo(id):
+    infor = edit_repo(request, id)
+    error = []
+    if infor is None:
+        return redirect('/images')
+    else:
+        return render_template('/images.html', infor = infor)
+    
+@app.route('/deleteRepo/<id>', methods = ['GET'])
+def deleteRepo(id):
+    delete_repo(id)
+    return redirect('/images')
 
+# -----------------------------------------------------Manejo de imagenes------------------------------------------------------------
+
+from imagen_controller import * 
+
+@app.route('/repoImage/<id>', methods = ['GET'])
+def imagesRepo(id):
+    idRepo = id
+    nombreImg = []
+    username = ''
+    repoName = get_repo_name(id)
+    imagenesRepo = repo_images(id)
+    
+    for i in range (0,len(imagenesRepo)):
+        nombreImg.append(imagenesRepo[i]['ruta'])
+
+    while username == '':
+        try:
+            username = session['username']
+        except:
+            username = ''
+    return render_template('imageRepo.html', idRepo = idRepo, autor = username, repoName = repoName, imagenes = imagenesRepo)
+
+@app.route('/image/upload/<id>', methods = ['POST'])#este id es el id del repositorio al cual se sube
+def postImage(id):
+    datos = create_image(request)
+    print (datos) # esquema del arreglo datos -> datos[0] = FileStorage:archivo ; datos[1] = nombre/titulo ;
+                    #datos[2] = autor ; datos[3] = tags ; 
+    # obtencion de la imagen
+    # tags = datos[3].split('#')
+    # del tags[0]
+    print (datos[3])
+    f = datos[0]
+    filename = f.filename
+    # print(filename)
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    # print('retorno de data')
+    # print(imag_data(1))
+
+    ruta = '/repoImage/' + str(id)
+    return redirect(ruta)
 
 # --------------------------------------------------- Inicializacion del server -------------------------------------------------------
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ create table repositorio(
 
 create table imagen(
 	id_imagen serial primary key, 
+	ruta_imagen varchar (200),
 	nombre_imagen varchar(60),  
 	autor varchar(60),
 	tags TEXT[], 

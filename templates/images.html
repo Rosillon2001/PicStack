@@ -18,18 +18,20 @@
       </ul>
     
       <div class="d-flex justify-content-center">
+        <!-- error de creacion de repo -->
         {% for value in error %}
         <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
             <strong>{{value}}</strong>
             <a type="button" class="btn btn-outline-danger" href="/images" style="margin-left: 1vh;">Reintentar</a>
         </div>
         {% endfor %}
-        {% for value in success %}
-        <div class="alert alert-success alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
+        <!-- errores de edicion de repos-->
+        {% for value in infor %}
+        <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center align-itmes-center " role="alert">
             <strong>{{value}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <a type="button" class="btn btn-outline-danger" href="/images" style="margin-left: 1vh;">Volver</a>
         </div>
-        {% endfor %}
+      {% endfor %}
       </div>
 
       <!-- form de creacion de los repositorios -->
@@ -73,15 +75,15 @@
           <div class="d-flex justify-content-center bg-dark borderborder-1 rounded-1"><h5 class="card-header " style="color: whitesmoke;">{{value['nombre']}}</h5></div>
 
           <!-- form edicion -->
-          <div class="collapse" id="form{{value['id']}}">
+          <div class="collapse" id="repoEdit{{value['id']}}">
             <div class="card card-body bg-dark" style="text-align: center;">
               <div class="mb-3">
-                <form action="/editRepo" method="POST">
+                <form action="/editRepo/{{value['id']}}" method="POST">
                     <h4 style="color: white">Nombre</h4>
-                    <input type="text" name="nombreRepo" placeholder="Repositorio n" style="
+                    <input type="text" name="nuevoNombreRepo" placeholder="Repositorio n" style="
                     border-radius: 8px; border-color: orangered; text-align: center;" value="{{value['nombre']}}">
                     <h4 style="color: white">Id Usuario</h4>
-                    <input type="number" name="userRepo" style="border-radius: 8px; border-color: orangered;" readonly>
+                    <input type="number" name="userNewRepo" style="border-radius: 8px; border-color: orangered;" value="{{value['user']}}" readonly>
                     <br><br>
                     <button class="btn btn-outline-light" type="submit" style="color: orangered;">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orangered" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
@@ -95,10 +97,10 @@
 
           <div class="card-body ">
              <img src="../static/images/LogoC.png" class="card-img" alt="...">
-             <a href="" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Sube Imagenes</a>
-             <a href="#form{{value['id']}}" style="color: rgb(174, 0, 255);" class="btn btn-outline-warning d-flex justify-content-center" id="editRepo"
+             <a href="/repoImage/{{value['id']}}" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Sube Imagenes</a>
+             <a href="#repoEdit{{value['id']}}" style="color: rgb(174, 0, 255);" class="btn btn-outline-warning d-flex justify-content-center" id="editRepo"
              data-bs-toggle="collapse" href="#newrepo" role="button" aria-expanded="false" aria-controls="collapseExample">Editar Nombre</a>
-             <a href="" style="color: black;" class="btn btn-outline-danger d-flex justify-content-center" id="deleteRepo">Eliminar</a>
+             <a href="/deleteRepo/{{value['id']}}" style="color: black;" class="btn btn-outline-danger d-flex justify-content-center" id="deleteRepo">Eliminar</a>
           </div>
           </div>
        </div>
