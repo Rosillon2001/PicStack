@@ -69,6 +69,7 @@
     <!-- mostrar los repositorios -->
     <div class="jumbotron mt-4 " > 
       <div class=" row  row-cols-md-4 " style="padding: 2vh;">
+
         {% for value in repositorios %}
         <div class="col">
           <div class="card border border-1 rounded-1" style="margin-bottom: 2vh;">
@@ -96,7 +97,26 @@
           </div>
 
           <div class="card-body ">
-             <img src="../static/images/LogoC.png" class="card-img" alt="...">
+            <!-- carousel mini -->
+            <div id="preview" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500" style="margin-bottom: 1vh;">
+                <div class="carousel-inner">
+                  {% if value['images'] %}
+                  <div class="carousel-item active">
+                    <img src="../static/images/bannerC.png" class="d-block w-100" style="width: 20vw; height: 20vh;">
+                  </div>
+                    {% for item in value['images'] %}
+                      <div class="carousel-item">
+                        <img src="../static/uploads/{{item}}" class="d-block w-100" style="width: 20vw; height: 20vh;">
+                      </div>  
+                    {% endfor %}
+                  {% else %}
+                      <div class="carousel-item active">
+                        <img src="../static/images/LogoC.png" class="d-block w-100" style="width: 20vw; height: 20vh;">
+                      </div>
+                  {% endif %}
+                  </div>
+                </div>
+             
              <a href="/repoImage/{{value['id']}}" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Sube Imagenes</a>
              <a href="#repoEdit{{value['id']}}" style="color: rgb(174, 0, 255);" class="btn btn-outline-warning d-flex justify-content-center" id="editRepo"
              data-bs-toggle="collapse" href="#newrepo" role="button" aria-expanded="false" aria-controls="collapseExample">Editar Nombre</a>
@@ -104,6 +124,7 @@
           </div>
           </div>
        </div>
+
        {% endfor %}
       </div>
     </div>

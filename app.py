@@ -115,14 +115,33 @@ def feed():
 @app.route('/images', methods = ['GET'])
 def repo():
     idu = 0
+    repoIds = []
+    repoImg = []
+    images = []
+    allimg = []
+    salida = []
     while idu == 0:
         try:
             idu = session['id']
         except:
             print()
     repositorios = get_user_repos(idu)
+    # obtengo los ids de repo para enviar las rutas de img para posteriormente armar el carrousel de preview del repo
+    for values in repositorios:
+        repoIds.append(values['id'])
+
+    for i in range (0, len(repoIds)):
+        repoImg.append(repo_images(repoIds[i]))
+        images = []
+        for j in range (0, len(repoImg[i])):
+            allimg.append(repoImg[i][j]['ruta'])
+            print("i"+str(repoImg[i][j]['ruta']))
+            images.append(repoImg[i][j]['ruta'])
+        repositorios[i]['images'] = images
+        salida.append(images)
     # print(repositorios[0]['nombre'])
-    return render_template('images.html', repositorios = repositorios)
+    print (salida)
+    return render_template('images.html', repositorios = repositorios, imagenes = salida)
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id): 

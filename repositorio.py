@@ -6,8 +6,8 @@ class Repositorio(db.Model):
     __tablename__ = 'repositorio' 
     id_repo = db.Column(db.Integer, primary_key=True)
     nombre_repo = db.Column(db.String(60), nullable=False, unique=True)
-    id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id_usuario'))
-    relacion = db.relationship('Imagen', backref = 'repositorio')
+    id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id_usuario', ondelete = 'CASCADE', onupdate = 'CASCADE'))
+    relacion = db.relationship('Imagen', backref = 'repositorio', passive_deletes = True)
 
     def __init__(self, nombre_repo, id_usuario):
         self.nombre_repo = nombre_repo

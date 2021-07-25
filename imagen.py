@@ -8,7 +8,7 @@ class Imagen(db.Model):
     nombre_imagen = db.Column(db.String(60), nullable=False, unique=True)
     autor = db.Column(db.String(60), nullable=False)
     tags = db.Column(db.Text, nullable = False)
-    id_repo = db.Column(db.Integer, db.ForeignKey('repositorio.id_repo'))
+    id_repo = db.Column(db.Integer, db.ForeignKey('repositorio.id_repo', ondelete = 'CASCADE', onupdate = 'CASCADE'))
 
     def __init__(self, ruta_imagen, nombre_imagen, autor, tags, id_repo):
         self.ruta_imagen = ruta_imagen
