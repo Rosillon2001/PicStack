@@ -2,37 +2,93 @@
 
 {% block content %}
 
-<!-- titulo -->
-<div class="d-flex justify-content-center">
-    <h1>{{repoName[0]}}</h1>
+<!-- boton de atras -->
+<div><button class="btn btn-outline-dark" type="submit" onclick="history.back()" style="color: orangered;">Atrás 
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orangered" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+      </svg>
+</button></div>
+
+        <!-- titulo -->
+        <div class="d-flex justify-content-center">
+            <h1>{{repoName[0]}}</h1>
+        </div>
+
+<div class="d-flex bd-highlight justify-content-center">
+
+    <div class="p-2 d-flex align-content-center" style="margin-right: 2vw;">
+        <a class="btn btn-outline-dark" data-bs-toggle="collapse" href="#newimg" role="button" style="color: orangered;"
+        aria-expanded="false" aria-controls="collapseExample">
+        Agregar Imagen
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+        </svg>
+        </a>
+    </div>
+
+</div>
+<!-- form de la imagen  -->
+
+    <div class="collapse" id="newimg">
+        <div class="card card-body bg-dark" style="text-align: center; justify-content: center;">
+          <div class="mb-3">
+
+            <form action="/image/upload/{{idRepo}}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="formlabel" style="color: white;">Seleccione la imagen a subir</label><br>
+                        <input type="file" name="rutaImagen" id="rutaImagen" style="width: 50vw;  font-size: 20px; border-radius: 8px; border-color: orangered; background-color: aliceblue;"
+                         aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label class="formlabel" style="color: white;">Coloque un título a la imagen</label><br>
+                        <input type="text" id="titulo" name="tituloImagen" style="width: 50vw; text-align: center;font-size: 20px; border-radius: 8px; border-color: orangered;" name="imgName" placeholder="Titulo de Imagen">
+                    </div>
+                    <div class="form-group">
+                        <label class="formlabel" style="color: white;">Coloque los tags de la imagen</label><br>
+                        <input type="text" id="tagsImagen" name="tagsImagen" style="width: 50vw;text-align: center; font-size: 20px; border-radius: 8px; border-color: orangered;" name="imgTags" placeholder="Ej: #foto #2021">
+                        <div id="emailHelp" class="form-text" style="color: white;">Ingrese los tags iniciando con # como en el ejemplo</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="formlabel" style="color: white;">Id Repositorio</label><br>
+                        <input type="number" id="idrepo" name="repoImagen" style="width: 50vw;text-align: center; font-size: 20px; border-radius: 8px; border-color: orangered;"  value="{{idRepo}}" placeholder="Id Repositorio" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="formlabel" style="color: white;">Autor</label><br>
+                        <input type="text" id="autor" name="autorImagen" style="width: 50vw;text-align: center; font-size: 20px; border-radius: 8px; border-color: orangered;" value="{{autor}}" placeholder="Autor" readonly>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-light" style="color: orangered; margin-top: 1vh;">Publicar</button>
+                    </div>
+            </form>
+
+        </div>
+    </div>
 </div>
 
-<div class="d-flex jumbotron mt-4 justify-content-center" style="text-align: center;">
-    <form action="/image/upload/{{idRepo}}" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <input type="file" name="rutaImagen" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*">
-            </div>
-            <div class="form-group">
-                <input type="text" name="tituloImagen" class="form-control" name="imgName" placeholder="Titulo de Imagen">
-            </div>
-            <div class="form-group">
-                <input type="text" name="autorImagen" class="form-control" name="imgAutor" value="{{autor}}" placeholder="Autor" readonly>
-            </div>
-            <div class="form-group">
-                <input type="text" name="tagsImagen" class="form-control" name="imgTags" placeholder="Tags">
-            </div>
-            <div class="form-group">
-                <input type="number" name="repoImagen" class="form-control" name="imgRepo" value="{{idRepo}}" placeholder="Id Repositorio" readonly>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-outline-light" style="color: orangered;">Publicar</button>
-            </div>
-    </form>
-</div>
-
+<div class="jumbotorn mt-4">
+<div class=" row  row-cols-md-4 " style="padding: 2vh;">
 {% for value in imagenes %}
-    <img src="../static/uploads/{{value['ruta']}}">
-    <h1>{{value['ruta']}}</h1>
-{% endfor %}
+<div class="col">
+    <div class="card border border-1 rounded-1" style="margin-bottom: 2vh; border-color: orangered;">
+        <img src="../static/uploads/{{value['ruta']}}" class="card-img-top" style="width: auto; height: 20vh;">
+        <div class="card-body" style="text-align: center;">
+        <h5 class="card-title">{{value['nombre']}}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Autor: {{value['autor']}}</li>
+            <li class="list-group-item">Tags:
+                {% for tag in value['tags'] %}
+                <a href="" style="margin-right: 0.5vw; text-decoration: none;">{{tag}}</a>
+                {% endfor %}
+            </li>
+            <li class=" d-flex list-group-item justify-content-center">
+                <a href="/delete/img/{{value['id']}}" class="btn btn-outline-dark" style="color: orangered; border-color: orangered;">Eliminar</a>
+            </li>
+        </ul>
 
+    </div>
+</div>
+{% endfor %}
+</div>
+</div>
 {% endblock %}

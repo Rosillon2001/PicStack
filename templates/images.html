@@ -98,7 +98,7 @@
 
           <div class="card-body ">
             <!-- carousel mini -->
-            <div id="preview" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500" style="margin-bottom: 1vh;">
+            <div id="preview" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000" style="margin-bottom: 1vh;">
                 <div class="carousel-inner">
                   {% if value['images'] %}
                   <div class="carousel-item active">
@@ -117,7 +117,7 @@
                   </div>
                 </div>
              
-             <a href="/repoImage/{{value['id']}}" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Sube Imagenes</a>
+             <a href="/repoImage/{{value['id']}}" style="color: orangered;" class="btn btn-outline-dark d-flex justify-content-center" id="verRepo">Gestor de Imagenes</a>
              <a href="#repoEdit{{value['id']}}" style="color: rgb(174, 0, 255);" class="btn btn-outline-warning d-flex justify-content-center" id="editRepo"
              data-bs-toggle="collapse" href="#newrepo" role="button" aria-expanded="false" aria-controls="collapseExample">Editar Nombre</a>
              <a href="/deleteRepo/{{value['id']}}" style="color: black;" class="btn btn-outline-danger d-flex justify-content-center" id="deleteRepo">Eliminar</a>
