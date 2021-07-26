@@ -15,9 +15,31 @@
         </li>
       </ul>
 
+
+<!-- mostrar el feed de imagenes -->
+<div class="jumbotorn mt-4">
+  <div class=" row  row-cols-md-4 " style="padding: 2vh;">
     {% for value in images %}
-      <h1>{{value}}</h1>
+    <div class="col">
+      <div class="card border border-1 rounded-1" style="margin-bottom: 2vh; border-color: orangered;">
+          <img src="../static/uploads/{{value['ruta_imagen']}}" class="card-img-top" style="width: auto; height: 20vh;">
+          <div class="card-body" style="text-align: center;">
+          <h5 class="card-title">{{value['nombre_imagen']}}</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item">Autor: {{value['autor']}}</li>
+              <li class="list-group-item">Tags:
+                  {% for tag in value['tags'] %}
+                  <a href="" style="margin-right: 0.5vw; text-decoration: none; color: orangered;">{{tag}}</a>
+                  {% endfor %}
+              </li>
+          </ul>
+  
+      </div>
+    </div>
     {% endfor %}
+  </div>
+</div>
 
     
     <script src="../static/js/app.js"></script>
