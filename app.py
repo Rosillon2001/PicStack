@@ -36,6 +36,8 @@ def register():
 @app.route("/register", methods = ['POST'])
 def createUser():
     user = request.form['usernameRegister']
+    clave = request.form['passwordRegister1']
+    conf = request.form['passwordRegister2']
     existencia = get_user_byname(user)
     matchPass = comp_claves(request)
     #print(existencia)
@@ -44,6 +46,12 @@ def createUser():
         errores.append('El nombre de usuario ya existe')
     if(matchPass == False):
         errores.append('Las contraseñas no coinciden')
+    if(clave == ''):
+        errores.append('Ingrese una contraseña')
+    if(conf == ''):
+        errores.append('Confirme su contraseña')
+    if(user == ''):
+        errores.append('Ingrese un nombre de usuario')
     if(len(errores) >= 1):
         #print(errores)
         return render_template("register.html", message = errores),406
@@ -84,12 +92,8 @@ def loginUser():
         return render_template('login.html', message = errores), 406
     else:
         session['username'] = username
-        # global message
-        # message = session['username']
         Userid = get_user_id(session['username'])
         session['id'] = Userid
-        # global sendId 
-        # sendId = session['id']
 
         return redirect("/home")
 
