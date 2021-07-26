@@ -3,11 +3,11 @@
 {% block content %}
 
 <!-- boton de atras -->
-<div><button class="btn btn-outline-dark" type="submit" onclick="history.back()" style="color: orangered;">Atrás 
+<div><a class="btn btn-outline-dark" href="/images" style="color: orangered;">Atrás 
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orangered" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
         <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
       </svg>
-</button></div>
+    </a></div>
 
         <!-- titulo -->
         <div class="d-flex justify-content-center">
@@ -27,6 +27,7 @@
     </div>
 
 </div>
+
 <!-- form de la imagen  -->
 
     <div class="collapse" id="newimg">
@@ -78,11 +79,11 @@
             <li class="list-group-item">Autor: {{value['autor']}}</li>
             <li class="list-group-item">Tags:
                 {% for tag in value['tags'] %}
-                <a href="" style="margin-right: 0.5vw; text-decoration: none;">{{tag}}</a>
+                <a href="" style="margin-right: 0.5vw; text-decoration: none; color: orangered;">{{tag}}</a>
                 {% endfor %}
             </li>
             <li class=" d-flex list-group-item justify-content-center">
-                <a href="/delete/img/{{value['id']}}" class="btn btn-outline-dark" style="color: orangered; border-color: orangered;">Eliminar</a>
+                <a href="/image/delete/{{value['id']}}" class="btn btn-outline-dark" style="color: orangered; border-color: orangered;">Eliminar</a>
             </li>
         </ul>
 

@@ -1,6 +1,9 @@
 *{
     font-family: goth;
 }
+body{
+    overflow-x: hidden;
+}
 
 @font-face {
     font-family: goth;

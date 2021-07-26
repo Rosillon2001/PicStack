@@ -66,3 +66,28 @@ def repo_images(idrepo):
         }
         imgList.append(img)
     return imgList
+
+def delete_img(id):
+    data = []
+    data.append(imag_data(id))
+    img = Imagen.query.get(id)
+    db.session.delete(img)
+    db.session.commit()
+    data.append({'mensaje':'Imagen eliminada'})
+
+    return data
+
+def allimg():
+    images = Imagen.query.all()
+    image_list = []
+    for img in images:
+        datos = {
+            'id_imagen':img.id_imagen, 
+            'ruta_imagen':img.ruta_imagen,
+            'nombre_imagen':img.nombre_imagen, 
+            'autor':img.autor,
+            'tags':img.tags
+        }
+        image_list.append(datos)
+
+    return image_list

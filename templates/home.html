@@ -15,7 +15,9 @@
         </li>
       </ul>
 
-    <p>Feed de imagenes</p>
+    {% for value in images %}
+      <h1>{{value}}</h1>
+    {% endfor %}
 
     
     <script src="../static/js/app.js"></script>

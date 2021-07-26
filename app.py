@@ -110,7 +110,8 @@ def sendData():
 
 @app.route('/home', methods = ['GET'])
 def feed():
-    return render_template('home.html')
+    todasImg = allimg()
+    return render_template('home.html', images = todasImg)
 
 @app.route('/images', methods = ['GET'])
 def repo():
@@ -243,19 +244,21 @@ def postImage(id):
     print (datos) # esquema del arreglo datos -> datos[0] = FileStorage:archivo ; datos[1] = nombre/titulo ;
                     #datos[2] = autor ; datos[3] = tags ; 
     # obtencion de la imagen
-    # tags = datos[3].split('#')
-    # del tags[0]
-    print (datos[3])
     f = datos[0]
     filename = f.filename
-    # print(filename)
     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    # print('retorno de data')
-    # print(imag_data(1))
 
     ruta = '/repoImage/' + str(id)
     return redirect(ruta)
 
+@app.route('/image/delete/<id>', methods = ['GET'])
+def deleteImg(id):
+    eliminacion = delete_img(id)
+
+    repoid = eliminacion[0]['repo']
+    ruta = '/repoImage/'+str(repoid)
+
+    return redirect(ruta)
 # --------------------------------------------------- Inicializacion del server -------------------------------------------------------
 if __name__ == "__main__":
     app.run()
