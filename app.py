@@ -42,16 +42,20 @@ def createUser():
     matchPass = comp_claves(request)
     #print(existencia)
     errores = []
-    if(existencia == True):
-        errores.append('El nombre de usuario ya existe')
+
+    if(clave == '' and user == '' and conf == ''):
+        errores.append('Campos vacios')
+    else:
+        if(clave == ''):
+            errores.append('Ingrese una contraseña')
+        if(conf == ''):
+            errores.append('Confirme su contraseña')
+        if(user == ''):
+            errores.append('Ingrese un nombre de usuario')
+        if(existencia == True):
+            errores.append('El nombre de usuario ya existe')
     if(matchPass == False):
         errores.append('Las contraseñas no coinciden')
-    if(clave == ''):
-        errores.append('Ingrese una contraseña')
-    if(conf == ''):
-        errores.append('Confirme su contraseña')
-    if(user == ''):
-        errores.append('Ingrese un nombre de usuario')
     if(len(errores) >= 1):
         #print(errores)
         return render_template("register.html", message = errores),406
