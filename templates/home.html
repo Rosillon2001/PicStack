@@ -29,8 +29,8 @@
           <ul class="list-group list-group-flush">
               <li class="list-group-item">Autor: {{value['autor']}}</li>
               <li class="list-group-item">Tags:
-                  {% for tag in value['tags'] %}
-                  <a href="" style="margin-right: 0.5vw; text-decoration: none; color: orangered;">{{tag}}</a>
+                  {% for nonum in value['nonum'] %}
+                  <a href="/image/tag/{{nonum}}" style="margin-right: 0.5vw; text-decoration: none; color: orangered;">#{{nonum}}</a>
                   {% endfor %}
               </li>
           </ul>

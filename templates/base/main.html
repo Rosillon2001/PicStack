@@ -18,8 +18,8 @@
         <div class="d-flex align-items-center justify-content-center">
             <nav class="navbar navbar-dark bg-dark d-flex border border-dark rounded">
                 <div class="container-fluid">
-                  <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Buscar por tags Ej. #2021" aria-label="Search">
+                  <form class="d-flex" action="/image/search" method="POST">
+                    <input class="form-control me-2" name="searchTag" type="search" placeholder="Ej. #2021" aria-label="Search">
                     <button class="btn btn-outline-light" type="submit" style="color: orangered; border-color: orangered;">Buscar</button>
                   </form>
                 </div>

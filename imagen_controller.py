@@ -1,6 +1,8 @@
+from re import search
 from app import db
 from imagen import Imagen
 from sqlalchemy import text
+
 
 def create_image(request):
     data = []
@@ -85,12 +87,18 @@ def allimg():
     images = Imagen.query.all()
     image_list = []
     for img in images:
+        sin = img.tags.copy()
+        for i in range (0, len(sin)):
+            tags = sin[i]
+            tags = tags.strip("#")
+            sin[i] = tags
         datos = {
             'id_imagen':img.id_imagen, 
             'ruta_imagen':img.ruta_imagen,
             'nombre_imagen':img.nombre_imagen, 
             'autor':img.autor,
-            'tags':img.tags
+            'tags':img.tags, 
+            'nonum':sin
         }
         image_list.append(datos)
 
@@ -98,14 +106,36 @@ def allimg():
 
 def img_by_tag(tag):
     resultados = []
+    sin = ''
     queryDB = db.session.query(Imagen).from_statement(text("select *from imagen where :tag = ANY(tags)")).params(tag = tag).all()
     for img in queryDB:
+        
+        sin = img.tags.copy()
+        for i in range (0, len(sin)):
+            tags = sin[i]
+            tags = tags.strip("#")
+            sin[i] = tags
+            
         datos = {
             'id_imagen':img.id_imagen, 
             'ruta_imagen':img.ruta_imagen,
             'nombre_imagen':img.nombre_imagen, 
             'autor':img.autor,
-            'tags':img.tags
+            'tags':img.tags,
+            'nonum':sin
         }
+
         resultados.append(datos)
     return resultados
+
+def search_by_tag(request):
+    tag = request.form['searchTag']
+    resultados = img_by_tag(tag)
+
+    return resultados
+
+def busqueda(request):
+    search = []
+    tag = request.form['searchTag']
+    search.append(tag)
+    return search

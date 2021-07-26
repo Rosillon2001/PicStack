@@ -1,0 +1,45 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<!-- boton de volver a inicio -->
+<div><a class="btn btn-outline-dark" href="/home" style="color: orangered;">Inicio 
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orangered" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+      </svg>
+    </a>
+</div>
+
+<div class="d-flex justify-content-center">
+    {% for value in tags %}
+    <h1 style="color: orangered; margin-left: 1vw;">{{value}}</h1>
+    {% endfor %}
+</div>
+
+<!-- mostrar las imagenes -->
+    <div class="jumbotorn mt-4">
+        <div class=" row  row-cols-md-4 " style="padding: 2vh;">
+        {% for value in imagenes %}
+        <div class="col">
+            <div class="card border border-1 rounded-1" style="margin-bottom: 2vh; border-color: orangered;">
+                <img src="../static/uploads/{{value['ruta_imagen']}}" class="card-img-top" style="width: auto; height: 20vh;">
+                <div class="card-body" style="text-align: center;">
+                <h5 class="card-title">{{value['nombre_imagen']}}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Autor: {{value['autor']}}</li>
+                    <li class="list-group-item">Tags:
+                        {% for tag in value['nonum'] %}
+                        <a href="/image/tag/{{tag}}" style="margin-right: 0.5vw; text-decoration: none; color: orangered;">#{{tag}}</a>
+                        {% endfor %}
+                    </li>
+                </ul>
+        
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %} 

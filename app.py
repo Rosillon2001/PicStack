@@ -111,7 +111,6 @@ def sendData():
 @app.route('/home', methods = ['GET'])
 def feed():
     todasImg = allimg()
-    print(img_by_tag('#Marte'))
     return render_template('home.html', images = todasImg)
 
 @app.route('/images', methods = ['GET'])
@@ -261,6 +260,27 @@ def deleteImg(id):
     ruta = '/repoImage/'+str(repoid)
 
     return redirect(ruta)
+
+# --------------------------------------------------- Busqueda por tags y etiquetas ------------------------------------------------------------
+@app.route('/image/search', methods = ['POST'])
+def serachTag():
+
+    buscar = busqueda(request)
+    imagenes = search_by_tag(request)
+
+    return render_template('search.html', buscar = buscar, imagenes = imagenes)
+
+@app.route('/image/tag/<tag>', methods = ['GET'])
+def tagClick(tag):
+    tag = "#"+str(tag)
+    tags = []
+    tags.append(tag) 
+    print(tag)
+    imagenes = img_by_tag(tag)
+    print(imagenes)
+
+    return render_template('tags.html', imagenes = imagenes, tags = tags)
+
 # --------------------------------------------------- Inicializacion del server -------------------------------------------------------
 if __name__ == "__main__":
     app.run()
