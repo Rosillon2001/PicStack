@@ -111,6 +111,7 @@ def sendData():
 @app.route('/home', methods = ['GET'])
 def feed():
     todasImg = allimg()
+    print(img_by_tag('#Marte'))
     return render_template('home.html', images = todasImg)
 
 @app.route('/images', methods = ['GET'])
@@ -143,6 +144,7 @@ def repo():
     # print(repositorios[0]['nombre'])
     print (salida)
     return render_template('images.html', repositorios = repositorios, imagenes = salida)
+
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id): 

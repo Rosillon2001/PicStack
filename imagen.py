@@ -5,9 +5,9 @@ class Imagen(db.Model):
     __tablename__ = 'imagen'
     id_imagen = db.Column(db.Integer, primary_key=True)
     ruta_imagen = db.Column(db.String(200), nullable=False)
-    nombre_imagen = db.Column(db.String(60), nullable=False, unique=True)
+    nombre_imagen = db.Column(db.String(60), nullable=False)
     autor = db.Column(db.String(60), nullable=False)
-    tags = db.Column(db.Text, nullable = False)
+    tags = db.Column(db.String, nullable = False)
     id_repo = db.Column(db.Integer, db.ForeignKey('repositorio.id_repo', ondelete = 'CASCADE', onupdate = 'CASCADE'))
 
     def __init__(self, ruta_imagen, nombre_imagen, autor, tags, id_repo):

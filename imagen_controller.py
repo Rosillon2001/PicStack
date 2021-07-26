@@ -1,5 +1,6 @@
 from app import db
 from imagen import Imagen
+from sqlalchemy import text
 
 def create_image(request):
     data = []
@@ -19,8 +20,11 @@ def create_image(request):
     etiquetas = tags.split('#')
     del etiquetas[0]
     for i in range (0, len(etiquetas)):
-        etiquetas[i] = "#"+etiquetas[i]
+        cadena = etiquetas[i]
+        cadenaLimpia = cadena.strip()
+        etiquetas[i] = "#"+cadenaLimpia
     data.append(etiquetas)
+    print(etiquetas)
 
     idRepo = request.form['repoImagen']
     data.append(idRepo)
@@ -91,3 +95,17 @@ def allimg():
         image_list.append(datos)
 
     return image_list
+
+def img_by_tag(tag):
+    resultados = []
+    queryDB = db.session.query(Imagen).from_statement(text("select *from imagen where :tag = ANY(tags)")).params(tag = tag).all()
+    for img in queryDB:
+        datos = {
+            'id_imagen':img.id_imagen, 
+            'ruta_imagen':img.ruta_imagen,
+            'nombre_imagen':img.nombre_imagen, 
+            'autor':img.autor,
+            'tags':img.tags
+        }
+        resultados.append(datos)
+    return resultados
