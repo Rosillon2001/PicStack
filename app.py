@@ -23,15 +23,15 @@ from user_controller import *
 
 @app.route("/", methods = ['GET'])
 def index():
-    return render_template("welcome.html")
+    return render_template("welcome.html"), 200
 
 @app.route("/login", methods = ['GET'])
 def login():
-    return render_template("login.html")
+    return render_template("login.html"), 200
 
 @app.route("/register", methods = ['GET'])
 def register():
-    return render_template("register.html")
+    return render_template("register.html"), 200
 
 @app.route("/register", methods = ['POST'])
 def createUser():
@@ -46,12 +46,12 @@ def createUser():
         errores.append('Las contraseñas no coinciden')
     if(len(errores) >= 1):
         #print(errores)
-        return render_template("register.html", message = errores)
+        return render_template("register.html", message = errores),406
     else:
         res = create_user(request)
         global IdU
         IdU = get_user_id(user)
-        return render_template("login.html", respuesta = res)
+        return render_template("login.html", respuesta = res),201
     # if(existencia == False):
     # else:
     #     res = {'Error':'El nombre de usuario ya existe'}
@@ -81,7 +81,7 @@ def loginUser():
                 errores.append('La contraseña es incorrecta')
 
     if(len(errores) >= 1):
-        return render_template('login.html', message = errores), 300
+        return render_template('login.html', message = errores), 406
     else:
         session['username'] = username
         # global message
@@ -111,7 +111,7 @@ def sendData():
 @app.route('/home', methods = ['GET'])
 def feed():
     todasImg = allimg()
-    return render_template('home.html', images = todasImg)
+    return render_template('home.html', images = todasImg),200
 
 @app.route('/images', methods = ['GET'])
 def repo():
@@ -131,6 +131,7 @@ def repo():
     for values in repositorios:
         repoIds.append(values['id'])
 
+# obtencion de la data para el carousel
     for i in range (0, len(repoIds)):
         repoImg.append(repo_images(repoIds[i]))
         images = []
@@ -140,16 +141,15 @@ def repo():
             images.append(repoImg[i][j]['ruta'])
         repositorios[i]['images'] = images
         salida.append(images)
-    # print(repositorios[0]['nombre'])
     print (salida)
-    return render_template('images.html', repositorios = repositorios, imagenes = salida)
+    return render_template('images.html', repositorios = repositorios, imagenes = salida),200
 
 
 @app.route('/user/<id>', methods =['GET'])
 def showdata(id): 
     datos = get_user_byid(id)
     print(datos)
-    return render_template('profile.html', datos = datos)
+    return render_template('profile.html', datos = datos),200
 
 @app.route('/updateUser', methods = ['POST'])
 def updateUser():
@@ -166,7 +166,7 @@ def updateUser():
 
     if update != None:
         datos = get_user_byid(id)
-        return render_template('profile.html', errores = update, datos = datos)
+        return render_template('profile.html', errores = update, datos = datos), 406
     else:    
         while 'username' in session or 'id' in session:
             try:
@@ -201,7 +201,7 @@ def newRepo():
         return redirect('/images')
     if repo[0] == 'Ya creo un repositorio con este nombre':
         error.append('Ya creo un repositorio con este nombre')
-        return render_template('/images.html', error = error)
+        return render_template('images.html', error = error),406
 
 @app.route('/editRepo/<id>', methods = ['POST'])
 def editRepo(id):
@@ -210,7 +210,7 @@ def editRepo(id):
     if infor is None:
         return redirect('/images')
     else:
-        return render_template('/images.html', infor = infor)
+        return render_template('images.html', infor = infor),406
     
 @app.route('/deleteRepo/<id>', methods = ['GET'])
 def deleteRepo(id):
@@ -237,20 +237,40 @@ def imagesRepo(id):
             username = session['username']
         except:
             username = ''
-    return render_template('imageRepo.html', idRepo = idRepo, autor = username, repoName = repoName, imagenes = imagenesRepo)
+    return render_template('imageRepo.html', idRepo = idRepo, autor = username, repoName = repoName, imagenes = imagenesRepo),200
 
 @app.route('/image/upload/<id>', methods = ['POST'])#este id es el id del repositorio al cual se sube
 def postImage(id):
+    errores = []
+    repoName = get_repo_name(id)
     datos = create_image(request)
     print (datos) # esquema del arreglo datos -> datos[0] = FileStorage:archivo ; datos[1] = nombre/titulo ;
                     #datos[2] = autor ; datos[3] = tags ; 
     # obtencion de la imagen
+    print(datos[3])
     f = datos[0]
-    filename = f.filename
-    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if f.filename == '':
+        errores.append('Por favor seleccione el archivo')
 
-    ruta = '/repoImage/' + str(id)
-    return redirect(ruta)
+    if datos[1] == '':
+        errores.append('Ingrese el nombre de la imagen')
+    
+    if datos[3] == []:
+        errores.append('Ingrese las etiquetas de la imagen')
+    
+    if (len(errores) > 0):
+        return render_template('imageRepo.html', errores = errores, repoName = repoName, idRepo = id, autor = datos[2]),406
+    
+    else:
+        filename = f.filename
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        img = Imagen(str(filename), datos[1], datos[2], datos[3], id)
+        db.session.add(img)
+        db.session.commit()
+
+        ruta = '/repoImage/' + str(id)
+        return redirect(ruta)
 
 @app.route('/image/delete/<id>', methods = ['GET'])
 def deleteImg(id):
@@ -268,18 +288,17 @@ def serachTag():
     buscar = busqueda(request)
     imagenes = search_by_tag(request)
 
-    return render_template('search.html', buscar = buscar, imagenes = imagenes)
+    return render_template('search.html', buscar = buscar, imagenes = imagenes),200
 
-@app.route('/image/tag/<tag>', methods = ['GET'])
-def tagClick(tag):
-    tag = "#"+str(tag)
-    tags = []
-    tags.append(tag) 
+@app.route('/image/tag', methods = ['POST'])
+def tagClick():
+    tag = request.form['etiqueta']
     print(tag)
+    tag = "#"+str(tag)
     imagenes = img_by_tag(tag)
     print(imagenes)
 
-    return render_template('tags.html', imagenes = imagenes, tags = tags)
+    return render_template('tags.html', imagenes = imagenes, tags = tag),200
 
 # --------------------------------------------------- Inicializacion del server -------------------------------------------------------
 if __name__ == "__main__":

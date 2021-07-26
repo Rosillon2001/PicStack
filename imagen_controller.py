@@ -31,10 +31,6 @@ def create_image(request):
     idRepo = request.form['repoImagen']
     data.append(idRepo)
 
-    img = Imagen(str(file), nombre, autor, etiquetas, idRepo)
-    db.session.add(img)
-    db.session.commit()
-
 
     return data
 
@@ -63,12 +59,18 @@ def repo_images(idrepo):
     images = db.session.query(Imagen).filter(Imagen.id_repo == idrepo)
     imgList = []
     for row in images:
+        sin = row.tags.copy()
+        for i in range (0, len(sin)):
+            tags = sin[i]
+            tags = tags.strip("#")
+            sin[i] = tags
         img = {
             'id':row.id_imagen,
             "ruta": row.ruta_imagen,
             "nombre": row.nombre_imagen,
             "autor": row.autor,
-            "tags": row.tags
+            "tags": row.tags, 
+            "nonum":sin
         }
         imgList.append(img)
     return imgList

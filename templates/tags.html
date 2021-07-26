@@ -27,11 +27,17 @@
                 <h5 class="card-title">{{value['nombre_imagen']}}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Autor: {{value['autor']}}</li>
-                    <li class="list-group-item">Tags:
-                        {% for tag in value['nonum'] %}
-                        <a href="/image/tag/{{tag}}" style="margin-right: 0.5vw; text-decoration: none; color: orangered;">#{{tag}}</a>
+                    <li class="list-group-item" style="text-align: center;">Autor: {{value['autor']}}</li>
+                    <li class="list-group-item" style="text-align: center;">Tags:
+                      <div class="d-flex flex-wrap">
+                        {% for nonum in value['nonum'] %}
+                        <form action="/image/tag" method="POST">
+                          <input type="hidden" name="etiqueta" value="{{nonum}}">
+                          <button class="d-flex btn btn-outline-dark" type="submit" 
+                          style="margin-right: 0.5vw; border: none; color: orangered;">#{{nonum}}</button>
+                        </form>
                         {% endfor %}
+                      </div>
                     </li>
                 </ul>
         
